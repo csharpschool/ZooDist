@@ -1,0 +1,23 @@
+﻿@page "/"
+
+<input @bind="a" />
+<input @bind="b" />
+<button class="btn btn-primary" @onclick="Divide">/</button>
+
+<h1>@result</h1>
+
+
+@code{
+    double a = 10, b = 20;
+    double result;
+
+    void Divide()
+    {
+        result = a / b;
+    }
+
+    /*protected override void OnInitialized()
+    {
+        result = a / b;
+    }*/
+}

@@ -1,0 +1,45 @@
+﻿@page "/zoo"
+@using Zoo.Data;
+
+
+<h3>Zoo</h3>
+<button class="btn btn-danger" @onclick="@(() => GetAnimals(true))">Predators</button>
+<button class="btn btn-success" @onclick="@(() => GetAnimals(false))">Carnivores</button>
+
+<ul class="list-group">
+@*     @foreach (var a in zd.GetAnimals(predator))
+    {
+        <li class="list-group-item list-group-item-@(a.Predator ? "danger" : "success")">
+            @a.AnimalType @(a.Predator ? "is a predator" : "is a carnivore")
+        </li>
+    } *@
+    @if(animals is not null)
+    {
+        @foreach (var a in animals)
+        {
+            <li class="list-group-item list-group-item-@(a.Predator ? "danger" : "success")">
+                @a.AnimalType @(a.Predator ? "is a predator" : "is a carnivore")
+            </li>
+        }
+    }
+</ul>
+
+@code {
+    ZooData zd = new();
+    //bool predator;
+    Animal[]? animals = null;
+
+    void GetAnimals(bool p)
+    {
+        animals = zd.GetAnimals(p);
+        //predator = p;
+    }
+
+
+
+    protected override void OnInitialized()
+    {
+        //animals[1].Change(true);
+    }
+
+}

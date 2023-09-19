@@ -24,10 +24,54 @@
     }
 </ul>
 
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Animal</th>
+            <th scope="col">Predator</th>
+            <th scope="col">Buttons</th>
+        </tr>
+    </thead>
+    <tbody>
+    @if(animals is not null)
+    {
+        @foreach (var a in animals)
+        {
+            <tr>
+                <td>@a.AnimalType</td>
+                <td>@(a.Predator ? "Predator" : "Carnivore")</td>
+                <td>
+                    <div class="btn-group" role="group" aria-label="Basic outlined example">
+                        <button @onclick="@(() => Feed(a.Id))" type="button" class="btn btn-outline-primary">Feed</button>
+                        <button @onclick="@(() => Pet(a.Id))" type="button" class="btn btn-outline-success">Pet</button>
+                    </div>
+                </td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>
+
+<p>@message</p>
+
 @code {
     ZooData zd = new();
     //bool predator;
     Animal[]? animals = null;
+    string message = string.Empty;
+
+    void Feed(int id)
+    {
+        var a = zd.GetAnimal(id);
+        message = $"Feeding {a.AnimalType} {a.Predator} {a.Id}";
+    }
+
+    void Pet(int id)
+    {
+        var a = zd.GetAnimal(id);
+        message = $"Petting {a.AnimalType} {a.Predator} {a.Id}";
+
+    }
 
     void GetAnimals(bool p)
     {
@@ -35,11 +79,9 @@
         //predator = p;
     }
 
-
-
     protected override void OnInitialized()
     {
-        //animals[1].Change(true);
+        animals = zd.GetAnimals();
     }
 
 }
